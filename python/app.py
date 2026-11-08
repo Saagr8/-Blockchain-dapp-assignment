@@ -10,10 +10,19 @@ web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 if not web3.is_connected():
     raise ConnectionError("Ganache is not running.")
 
-# Load the deployed smart contract
-contract_address = Web3.to_checksum_address(
-    "0x7E7620B498e60193599b7965556dd18Ea6d7BDDC"
+
+
+# Load the latest deployed contract address
+address_path = (
+    Path(__file__).resolve().parent.parent
+    / "contracts"
+    / "deployed_address.txt"
 )
+
+contract_address = Web3.to_checksum_address(
+    address_path.read_text(encoding="utf-8").strip()
+)
+
 
 abi_path = (
     Path(__file__).resolve().parent.parent

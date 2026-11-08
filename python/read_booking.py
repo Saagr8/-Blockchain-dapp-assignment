@@ -12,9 +12,18 @@ if not web3.is_connected():
 print("Connected to Ganache:", web3.is_connected())
 
 # Address of our deployed HotelBooking contract
-contract_address = Web3.to_checksum_address(
-    "0x7E7620B498e60193599b7965556dd18Ea6d7BDDC"
+
+# Load the deployed contract address from a file
+address_path = (
+    Path(__file__).resolve().parent.parent
+    / "contracts"
+    / "deployed_address.txt"
 )
+
+contract_address = Web3.to_checksum_address(
+    address_path.read_text(encoding="utf-8").strip()
+)
+
 
 # Load the contract ABI from our project
 abi_path = (
